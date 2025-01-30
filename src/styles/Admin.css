@@ -1,0 +1,93 @@
+.admin-panel {
+     max-width: 800px;
+     margin: 20px auto;
+     padding: 20px;
+     background: #f8f9fa;
+     border-radius: 10px;
+     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+   }
+   
+   .admin-title {
+     text-align: center;
+     margin-bottom: 20px;
+   }
+   
+   .add-book-form {
+     background: #ffffff;
+     padding: 15px;
+     border-radius: 5px;
+     margin-bottom: 20px;
+   }
+   
+   .add-book-form input {
+     width: 100%;
+     padding: 10px;
+     margin-bottom: 10px;
+     border: 1px solid #ced4da;
+     border-radius: 5px;
+   }
+   
+   .add-book-btn {
+     width: 100%;
+     padding: 10px;
+     background: #007bff;
+     color: white;
+     border: none;
+     cursor: pointer;
+     border-radius: 5px;
+   }
+   
+   .add-book-btn:hover {
+     background: #0056b3;
+   }
+   
+   .books-list-title {
+     margin-top: 20px;
+   }
+   
+   .books-ul {
+     list-style: none;
+     padding: 0;
+   }
+   
+   .book-item {
+     background: white;
+     padding: 15px;
+     margin: 10px 0;
+     border-radius: 5px;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+   }
+   
+   .book-actions {
+     display: flex;
+     gap: 10px;
+   }
+   
+   .increase-book-btn {
+     background: #28a745;
+     color: white;
+     padding: 5px 10px;
+     border: none;
+     cursor: pointer;
+     border-radius: 5px;
+   }
+   
+   .increase-book-btn:hover {
+     background: #218838;
+   }
+   
+   .remove-book-btn {
+     background: #dc3545;
+     color: white;
+     padding: 5px 10px;
+     border: none;
+     cursor: pointer;
+     border-radius: 5px;
+   }
+   
+   .remove-book-btn:hover {
+     background: #c82333;
+   }
+   
