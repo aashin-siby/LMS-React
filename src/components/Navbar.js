@@ -26,6 +26,11 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
+                  <Link className="nav-link" to="/userRentals">
+                    User Rentals
+                  </Link>
+                  </li>
+                <li className="nav-item">
                   <button className="btn btn-danger" onClick={logout}>
                     Logout
                   </button>

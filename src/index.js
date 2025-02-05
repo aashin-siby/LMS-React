@@ -1,9 +1,11 @@
-/* Title : Library Management System - React
+/*
+ Title : Library Management System - React
 Author: Aashin Siby
 Created at : 27/01/2025
-Updated at : 30/01/2025
+Updated at : 04/02/2025
 Reviewed by : Silpa Madhusoodanan
-Reviewed at : 30/01/2025*/
+Reviewed at : 30/01/2025
+*/
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';

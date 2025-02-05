@@ -6,14 +6,12 @@ import "../styles/HomePage.css";
 const HomePage = () => {
   return (
     <div className="homepage ">
-      <div className="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-light text-dark">
+      <div className="hero-section d-flex align-items-center justify-content-center text-center  bg-light text-dark shadow-lg rounded">
         <div className="hero-text">
           <h1 className="display-4 fw-bold">
             Welcome to the Library Management System
           </h1>
-          <p className="lead">
-            Easily add, update, and remove books with our powerful system.
-          </p>
+         
           <div className="mt-4">
             <Link to="/admin" className="btn btn-primary btn-lg me-3">
               Go to Admin Panel

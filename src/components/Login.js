@@ -22,7 +22,6 @@ function LoginPage() {
         }
       );
 
-      alert("Login Successful!");
       login(response.data.token);
       navigate("/admin");
     } catch (error) {

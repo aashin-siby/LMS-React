@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
-// Create an authentication context
+//Authentication context
 const AuthContext = createContext();
 
 // AuthProvider component to manage authentication state

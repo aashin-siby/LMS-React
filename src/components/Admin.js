@@ -2,20 +2,21 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Admin.css";
 
-//Function which handle all the admin modules
 const Admin = () => {
   const [books, setBooks] = useState([]);
   const [newBook, setNewBook] = useState({
     title: "",
     author: "",
     copiesAvailable: 1,
+    imageUrl: "",
+    description: "",
   });
 
   useEffect(() => {
     fetchBooks();
   }, []);
-
-  //Get all the books from Library
+  
+  //Function to fetch the books
   const fetchBooks = async () => {
     try {
       const token = sessionStorage.getItem("token");
@@ -28,15 +29,14 @@ const Admin = () => {
         "http://localhost:5027/api/UserBooks/books",
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
-      setBooks(response.data);
+    setBooks(response.data);
     } catch (error) {
       console.error("Error fetching books:", error.response || error.message);
       alert("Failed to fetch books.");
     }
   };
 
-  //Delete the Book from Library
+  //Function to remove the book
   const handleRemoveBook = async (bookId) => {
     try {
       const token = sessionStorage.getItem("token");
@@ -47,9 +47,7 @@ const Admin = () => {
 
       await axios.delete(
         `http://localhost:5027/api/AdminBooks/removeBook/${bookId}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       alert("Book removed successfully.");
@@ -60,7 +58,7 @@ const Admin = () => {
     }
   };
 
-  //Function to increase the count of book by 1
+  //Function to increase the book count
   const increaseBookCount = async (bookId) => {
     try {
       const token = sessionStorage.getItem("token");
@@ -86,7 +84,7 @@ const Admin = () => {
     }
   };
 
-  //Function to add new book to the Library
+//Function to handle the add book
   const handleAddBook = async (event) => {
     event.preventDefault();
 
@@ -102,16 +100,26 @@ const Admin = () => {
         return;
       }
 
+      const decodedImageUrl = decodeURIComponent(newBook.imageUrl);
+
       const apiUrl = `http://localhost:5027/api/AdminBooks/addBook/${encodeURIComponent(
         newBook.title
-      )}/${encodeURIComponent(newBook.author)}/${newBook.copiesAvailable}`;
+      )}/${encodeURIComponent(newBook.author)}/${encodeURIComponent(
+        decodedImageUrl
+      )}/${encodeURIComponent(newBook.description)}/${newBook.copiesAvailable}`;
 
       await axios.post(apiUrl, null, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       alert("Book added successfully.");
-      setNewBook({ title: "", author: "", copiesAvailable: 1 });
+      setNewBook({
+        title: "",
+        author: "",
+        copiesAvailable: 1,
+        imageUrl: "",
+        description: "",
+      });
       fetchBooks();
     } catch (error) {
       console.error(
@@ -123,8 +131,10 @@ const Admin = () => {
   };
 
   return (
-    <div className="admin-panel">
+    
+    <div className="admin-panel ">
       <h2 className="admin-title">Admin Panel</h2>
+      <div className="admin-panel shadow-lg rounded">
 
       {/* Add Book Form */}
       <div className="add-book-container">
@@ -174,11 +184,36 @@ const Admin = () => {
                   placeholder="Copies Available"
                   value={newBook.copiesAvailable}
                   onChange={(event) =>
-                    setNewBook({ ...newBook, copiesAvailable: event.target.value })
+                    setNewBook({
+                      ...newBook,
+                      copiesAvailable: event.target.value,
+                    })
                   }
                   required
                   min="1"
                 />
+              </div>
+              <div className="mb-3">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Image URL (Optional)"
+                  value={newBook.imageUrl}
+                  onChange={(event) =>
+                    setNewBook({ ...newBook, imageUrl: event.target.value })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <textarea
+                  className="form-control"
+                  placeholder="Book Description (Optional)"
+                  value={newBook.description}
+                  onChange={(event) =>
+                    setNewBook({ ...newBook, description: event.target.value })
+                  }
+                  rows="3"
+                ></textarea>
               </div>
               <button type="submit" className="btn btn-success w-100">
                 Add Book
@@ -187,17 +222,43 @@ const Admin = () => {
           </div>
         </div>
       </div>
-
+      </div>
+      <hr></hr>
       {/* Books List */}
-      <div className="books-list">
+      <div className="admin-panel shadow-lg rounded">
+
+      <div className="books-list ">
         <h3 className="books-list-title">Books List</h3>
         <ul className="books-ul">
           {books.map((book) => (
             <li key={book.bookId} className="book-item">
               <div className="book-info">
-                <h4 className="book-title">{book.title}</h4>
-                <p className="book-author">Author: {book.author}</p>
-                <p className="book-copies">Copies: {book.copiesAvailable}</p>
+                <h4 className="fw-bold text-primary">{book.title}</h4>
+                <p className="text-secondary fst-italic">
+                  Author: {book.author}
+                </p>
+
+                <p className="text-muted fw-semibold">
+                  📖 Copies: {book.copiesAvailable}
+                </p>
+                {book.imageUrl ? (
+                  <img
+                    src={decodeURIComponent(book.imageUrl)}
+                    alt={book.title}
+                    className="book-image"
+                    width={"100px"}
+                  />
+                ) : (
+                  <img
+                    src="https://media.istockphoto.com/id/466564401/vector/blank-vertical-book-template.jpg?s=612x612&w=0&k=20&c=8Sg5cQzhcqF40PHMmSbOCAr_q_c0HlU8qmQS5tH6wdc="
+                    alt="No Image Available"
+                    className="book-image"
+                    width={"100px"}
+                  />
+                )}
+                {book.description && (
+                  <p className="book-description">{book.description}</p>
+                )}
               </div>
               <div className="book-actions">
                 <button
@@ -217,6 +278,7 @@ const Admin = () => {
           ))}
         </ul>
       </div>
+    </div>
     </div>
   );
 };
