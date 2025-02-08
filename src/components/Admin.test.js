@@ -1,6 +1,8 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import Admin from "../components/Admin";
+// import Admin from "";
+const Admin = require("../components/Admin");
+
 import "@testing-library/jest-dom/extend-expect";
 
 describe("Admin Component - Add Book Form", () => {

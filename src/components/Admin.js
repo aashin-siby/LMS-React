@@ -38,6 +38,9 @@ const Admin = () => {
 
   //Function to remove the book
   const handleRemoveBook = async (bookId) => {
+    if (!window.confirm("Are you sure you want to remove this book?")) {
+      return;
+    }
     try {
       const token = sessionStorage.getItem("token");
       if (!token) {
@@ -58,17 +61,21 @@ const Admin = () => {
     }
   };
 
+
   //Function to increase the book count
   const increaseBookCount = async (bookId) => {
+    if (!window.confirm("Are you sure you want to add one more copy?")) {
+      return;
+    }
     try {
       const token = sessionStorage.getItem("token");
       if (!token) {
         alert("Session expired. Please login again.");
         return;
       }
-      const count = 1;
+
       await axios.post(
-        `http://localhost:5027/api/AdminBooks/increaseBookCopies/${bookId}/${count}`,
+        `http://localhost:5027/api/AdminBooks/increaseBookCopies/${bookId}/1`,
         null,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -76,59 +83,48 @@ const Admin = () => {
       alert("Book count increased successfully.");
       fetchBooks();
     } catch (error) {
-      console.error(
-        "Error increasing book count:",
-        error.response?.data || error.message
-      );
+      console.error("Error increasing book count:", error.response?.data || error.message);
       alert("Failed to increase book count.");
     }
   };
 
 //Function to handle the add book
-  const handleAddBook = async (event) => {
-    event.preventDefault();
+const handleAddBook = async (event) => {
+  event.preventDefault();
 
-    try {
-      const token = sessionStorage.getItem("token");
-      if (!token) {
-        alert("Session expired. Please login again.");
-        return;
-      }
+  if (!newBook.title || !newBook.author || newBook.copiesAvailable <= 0) {
+    alert("Please fill in all required fields correctly.");
+    return;
+  }
 
-      if (!newBook.title || !newBook.author || newBook.copiesAvailable <= 0) {
-        alert("Please fill in all fields correctly.");
-        return;
-      }
+  if (!window.confirm("Are you sure you want to add this book?")) {
+    return;
+  }
 
-      const decodedImageUrl = decodeURIComponent(newBook.imageUrl);
-
-      const apiUrl = `http://localhost:5027/api/AdminBooks/addBook/${encodeURIComponent(
-        newBook.title
-      )}/${encodeURIComponent(newBook.author)}/${encodeURIComponent(
-        decodedImageUrl
-      )}/${encodeURIComponent(newBook.description)}/${newBook.copiesAvailable}`;
-
-      await axios.post(apiUrl, null, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      alert("Book added successfully.");
-      setNewBook({
-        title: "",
-        author: "",
-        copiesAvailable: 1,
-        imageUrl: "",
-        description: "",
-      });
-      fetchBooks();
-    } catch (error) {
-      console.error(
-        "Error adding book:",
-        error.response?.data || error.message
-      );
-      alert("Failed to add book.");
+  try {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      alert("Session expired. Please login again.");
+      return;
     }
-  };
+
+    const apiUrl = `http://localhost:5027/api/AdminBooks/addBook/${encodeURIComponent(
+      newBook.title
+    )}/${encodeURIComponent(newBook.author)}/${encodeURIComponent(
+      newBook.imageUrl
+    )}/${encodeURIComponent(newBook.description)}/${newBook.copiesAvailable}`;
+
+    await axios.post(apiUrl, null, { headers: { Authorization: `Bearer ${token}` } });
+
+    alert("Book added successfully.");
+    setNewBook({ title: "", author: "", copiesAvailable: 1, imageUrl: "", description: "" });
+    fetchBooks();
+  } catch (error) {
+    console.error("Error adding book:", error.response?.data || error.message);
+    alert("Failed to add book.");
+  }
+};
+
 
   return (
     
