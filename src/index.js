@@ -18,8 +18,8 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <Router>
+        {/* <Router> */}
                 <App />
-        </Router>
+        {/* </Router> */}
     </React.StrictMode>
 );
