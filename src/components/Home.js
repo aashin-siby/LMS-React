@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "../styles/HomePage.css";
 
 //Function which return the homepage
