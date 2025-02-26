@@ -8,6 +8,7 @@ function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  // Extracting login function from context
   const { login } = useAuth();
 
   // Function to handle form submission

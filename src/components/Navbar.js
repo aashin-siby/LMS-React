@@ -2,7 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../services/AuthContest";
 
+// Navbar Component - Displays navigation links based on authentication status
 const Navbar = () => {
+  // Extracting authentication state and logout function from context
   const { isLoggedIn, logout } = useAuth();
 
   return (
@@ -22,14 +24,14 @@ const Navbar = () => {
               <>
                 <li className="nav-item">
                   <Link className="nav-link" to="/admin">
-                    Admin
+                    Books
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/userRentals">
                     User Rentals
                   </Link>
-                  </li>
+                </li>
                 <li className="nav-item">
                   <button className="btn btn-danger" onClick={logout}>
                     Logout

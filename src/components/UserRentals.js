@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+//Function defining the User Rental Details component
 export default function UserRentals() {
   const [rentals, setRentals] = useState([]);
   const [groupedRentals, setGroupedRentals] = useState({});
@@ -9,6 +10,7 @@ export default function UserRentals() {
     fetchRentalDetails();
   }, []);
 
+  // Function to fetch rental details from the API
   const fetchRentalDetails = async () => {
     try {
       const token = sessionStorage.getItem("token");
@@ -22,7 +24,7 @@ export default function UserRentals() {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log(response.data);
+      // console.log(response.data);
 
       setRentals(response.data);
       groupRentalsByUser(response.data);
@@ -35,6 +37,7 @@ export default function UserRentals() {
     }
   };
 
+  // Function to group rental details by userId - converting array into object
   const groupRentalsByUser = (rentals) => {
     const grouped = rentals.reduce((acc, rental) => {
       if (!acc[rental.userId]) {
@@ -85,7 +88,6 @@ export default function UserRentals() {
                         <th>Borrow ID</th>
                         <th>Book ID</th>
                         <th>Title</th>
-                        {/* <th>Username</th> */}
                         <th>Payment</th>
                       </tr>
                     </thead>
@@ -95,7 +97,6 @@ export default function UserRentals() {
                           <td>{rental.borrowId}</td>
                           <td>{rental.bookId}</td>
                           <td>{rental.title}</td>
-                          {/* <td>{rental.username}</td> */}
                           <td>{rental.payment}</td>
                         </tr>
                       ))}
