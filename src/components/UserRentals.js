@@ -24,7 +24,6 @@ export default function UserRentals() {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      // console.log(response.data);
 
       setRentals(response.data);
       groupRentalsByUser(response.data);
@@ -89,6 +88,7 @@ export default function UserRentals() {
                         <th>Book ID</th>
                         <th>Title</th>
                         <th>Payment</th>
+                        <th>Rental Status</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -98,6 +98,13 @@ export default function UserRentals() {
                           <td>{rental.bookId}</td>
                           <td>{rental.title}</td>
                           <td>{rental.payment}</td>
+                          <td>
+                            {rental.returnDate ? (
+                               <p className="text-success">Returned</p>
+                            ) : (
+                              <p className="text-danger">Not Returned</p>
+                            )}
+                          </td>
                         </tr>
                       ))}
                     </tbody>

@@ -16,7 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/manageBooks" element={<Admin />} />
           <Route path="/userRentals" element={<UserRentals />} />
         </Routes>
       </AuthProvider>

@@ -24,7 +24,7 @@ function LoginPage() {
       );
 
       login(response.data.token);
-      navigate("/admin");
+      navigate("/manageBooks");
     } catch (error) {
       console.error("Error:", error.response?.data || error.message);
       alert("Login Failed. Check your credentials.");

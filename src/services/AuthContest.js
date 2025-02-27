@@ -1,11 +1,12 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 //Authentication context
 const AuthContext = createContext();
-
 // AuthProvider component to manage authentication state
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
@@ -21,6 +22,7 @@ export const AuthProvider = ({ children }) => {
   // Function to handle logout: remove token and update state
   const logout = () => {
     sessionStorage.removeItem("token");
+    navigate("/login");
     setIsLoggedIn(false);
   };
 
